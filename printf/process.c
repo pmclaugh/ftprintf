@@ -122,6 +122,13 @@ void	pr_double(t_conv *conv)
 
 void	pr_point(t_conv *conv)
 {
+	int i;
+
+	i = -1;
+	while (conv->str[++i])
+		conv->str[i] = ft_tolower(conv->str[i]);
+	conv->str = insert_at(conv->str, 'x', 0);
+	conv->str = insert_at(conv->str, '0', 0);
 }
 
 void	pr_pct(t_conv *conv)

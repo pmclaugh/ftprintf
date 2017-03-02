@@ -106,7 +106,7 @@ void	im_double(t_conv *conv, va_list va)
 
 void	im_point(t_conv *conv, va_list va)
 {
-	conv->str = ft_itoa_base(va_arg(va, int), 16);
+	conv->str = ft_ultoa_base((unsigned long)va_arg(va, long int), 16);
 }
 
 void	im_oct(t_conv *conv, va_list va)
