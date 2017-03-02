@@ -34,6 +34,8 @@ void	setup_process(void)
 	g_process[17] = pr_pct;
 	g_process[18] = pr_n;
 	g_process[19] = pr_int;
+	g_process[20] = pr_nope;
+	g_process[21] = pr_nope;
 }
 
 void	pr_char(t_conv *conv)
@@ -143,6 +145,11 @@ void	pr_pct(t_conv *conv)
 
 void	pr_n(t_conv *conv)
 {
+}
+
+void	pr_nope(t_conv *conv)
+{
+
 }
 
 void	process(t_conv *conv)

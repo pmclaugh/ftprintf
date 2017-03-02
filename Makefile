@@ -37,7 +37,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar -rc $(NAME) $(OBJS)
 %.o: %.c
-	gcc -c -o $@ $< -I includes
+	gcc -w -c -o $@ $< -I includes
 clean:
 	rm -f $(OBJS)
 fclean: clean

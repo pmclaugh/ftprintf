@@ -34,6 +34,8 @@ void	setup_import(void)
 	g_import[17] = im_pct;
 	g_import[18] = im_n;
 	g_import[19] = im_uint;
+	g_import[20] = im_nope;
+	g_import[21] = im_nope;
 }
 
 void	im_char(t_conv *conv, va_list va)
@@ -158,6 +160,11 @@ void	im_pct(t_conv *conv, va_list va)
 
 void	im_n(t_conv *conv, va_list va)
 {
+}
+
+void	im_nope(t_conv *conv, va_list va)
+{
+	conv->str = ft_strdup("NYI");
 }
 
 void	import(t_conv *conv, va_list va)
