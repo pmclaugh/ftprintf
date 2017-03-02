@@ -33,19 +33,22 @@ void	setup_process(void)
 	g_process[16] = pr_point;
 	g_process[17] = pr_pct;
 	g_process[18] = pr_n;
+	g_process[19] = pr_int;
 }
 
 void	pr_char(t_conv *conv)
 {
-	while (ft_strlen(conv->str) < conv->width)
+	int i;
+
+	i = 1;
+	while (i++ < conv->width)
 		conv->str = insert_at(conv->str, ' ', conv->minus * ft_strlen(conv->str));
+	if (conv->width == 0)
+		conv->width = 1;
 }
 
-void	pr_int(t_conv *conv)
+void	pre_int(t_conv *conv)
 {
-	int		signoffset;
-	char	fillchar;
-
 	if (conv->str[0] == '-')
 	{
 		conv->plus = 0;
@@ -57,9 +60,25 @@ void	pr_int(t_conv *conv)
 		conv->space = 0;
 		free(conv->str);
 		conv->str = ft_strdup("");
+		if (conv->specifier == 'x' || conv->specifier == 'X')
+			return ;
 	}
-	if (conv->hash)
+	if (conv->hash && (ft_atoi(conv->str) != 0 || conv->str[0] == 0))
+	{
+		conv->plus = 0;
+		conv->space = 0;
 		conv->str = insert_at(conv->str, '0', 0);
+		if (conv->specifier == 'x' || conv->specifier == 'X')
+			conv->str = insert_at(conv->str, conv->specifier, 1);
+	}
+}
+
+void	pr_int(t_conv *conv)
+{
+	int		signoffset;
+	char	fillchar;
+
+	pre_int(conv);
 	if (conv->precision_on || conv->minus)
 		conv->zero = 0;
 	fillchar = conv->zero && !conv->minus ? '0' : ' ';
@@ -71,6 +90,8 @@ void	pr_int(t_conv *conv)
 		conv->str = insert_at(conv->str, '+', 0);
 	else if (conv->space)
 		conv->str = insert_at(conv->str, ' ', 0);
+	if ((conv->specifier == 'x' || conv->specifier == 'X') && conv->hash && fillchar == '0')
+		signoffset = 2;
 	while (ft_strlen(conv->str) < conv->width)
 		conv->str = insert_at(conv->str, fillchar, signoffset + conv->minus * ft_strlen(conv->str));
 }

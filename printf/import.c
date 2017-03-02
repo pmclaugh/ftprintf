@@ -33,20 +33,28 @@ void	setup_import(void)
 	g_import[16] = im_point;
 	g_import[17] = im_pct;
 	g_import[18] = im_n;
+	g_import[19] = im_uint;
 }
 
 void	im_char(t_conv *conv, va_list va)
 {
-	char *out;
+	char c;
 
-	out = ft_strnew(1);
-	out[0] = (char)va_arg(va, int);
-	conv->str = out;
+	c = (char)va_arg(va, int);
+	if (!c)
+		conv->str = ft_strnew(0);
+	else
+	{
+		conv->str = ft_strnew(1);
+		conv->str[0] = c;
+	}
 }
 
 void	im_str(t_conv *conv, va_list va)
 {
 	conv->str = ft_strdup(va_arg(va, char *));
+	if (conv->str == NULL)
+		conv->str = ft_strdup("(null)");
 }
 
 void	im_int(t_conv *conv, va_list va)
@@ -69,6 +77,13 @@ void	im_int(t_conv *conv, va_list va)
 
 void	im_uint(t_conv *conv, va_list va)
 {
+	conv->space = 0;
+	conv->plus = 0;
+	if (conv->specifier == 'U')
+	{
+		conv->length[0] = 'l';
+		conv->length[1] = 0;
+	}
 	if (conv->length[0] == 0)
 		conv->str = ft_utoa_base((unsigned int)va_arg(va, int), 10);
 	if (ft_strcmp(conv->length, "hh") == 0)
@@ -76,7 +91,7 @@ void	im_uint(t_conv *conv, va_list va)
 	if (ft_strcmp(conv->length, "h") == 0)
 		conv->str = ft_utoa_base((unsigned short int)va_arg(va, int), 10);
 	if (ft_strcmp(conv->length, "l") == 0)
-		conv->str = ft_ultoa_base(va_arg(va, unsigned long int), 10);
+		conv->str = ft_ulltoa_base((unsigned long long int)va_arg(va, long int), 10);
 	if (ft_strcmp(conv->length, "ll") == 0)
 		conv->str = ft_ulltoa_base(va_arg(va, unsigned long long int), 10);
 	if (ft_strcmp(conv->length, "j") == 0)
@@ -97,19 +112,19 @@ void	im_point(t_conv *conv, va_list va)
 void	im_oct(t_conv *conv, va_list va)
 {
 	if (conv->length[0] == 0)
-		conv->str = ft_itoa_base(va_arg(va, int), 8);
+		conv->str = ft_utoa_base(va_arg(va, int), 8);
 	if (ft_strcmp(conv->length, "hh") == 0)
-		conv->str = ft_itoa_base((signed char)va_arg(va, int), 8);
+		conv->str = ft_utoa_base((signed char)va_arg(va, int), 8);
 	if (ft_strcmp(conv->length, "h") == 0)
-		conv->str = ft_itoa_base((short int)va_arg(va, int), 8);
+		conv->str = ft_utoa_base((short int)va_arg(va, int), 8);
 	if (ft_strcmp(conv->length, "l") == 0)
-		conv->str = ft_ltoa_base(va_arg(va, long int), 8);
+		conv->str = ft_ultoa_base(va_arg(va, long int), 8);
 	if (ft_strcmp(conv->length, "ll") == 0)
-		conv->str = ft_lltoa_base(va_arg(va, long long int), 8);
+		conv->str = ft_ulltoa_base(va_arg(va, long long int), 8);
 	if (ft_strcmp(conv->length, "j") == 0)
-		conv->str = ft_itoa_base(va_arg(va, intmax_t), 8);
+		conv->str = ft_ulltoa_base(va_arg(va, intmax_t), 8);
 	if (ft_strcmp(conv->length, "z") == 0)
-		conv->str = ft_itoa_base(va_arg(va, size_t), 8);
+		conv->str = ft_ulltoa_base(va_arg(va, size_t), 8);
 }
 
 void	im_hex(t_conv *conv, va_list va)

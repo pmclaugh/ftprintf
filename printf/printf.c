@@ -17,7 +17,7 @@ char	*insert_at(char *str, char c, int index)
 	char	*newstr;
 	int		i;
 
-	newstr = (char *)malloc(ft_strlen(str) + 2);
+	newstr = (char *)ft_memalloc(ft_strlen(str) + 2);
 	i = 0;
 	ft_memcpy(newstr, str, index);
 	newstr[index] = c;
@@ -116,18 +116,24 @@ void	print_conv(t_conv *conv)
 	printf("and specifier is %c\n", conv->specifier);
 }
 
-void	ft_printf(char *str, ...)
+int		ft_printf(char *str, ...)
 {
 	va_list ap;
 	char	*output;
+	char	*temp;
+	int		olen;
 	t_conv	*c;
 
 	va_start(ap, str);
 	output = ft_strdup("");
+	olen = 0;
 	while (*str)
 	{
 		if (*str != '%')
+		{
 			output = insert_at(output, *str++, ft_strlen(output));
+			olen++;
+		}
 		else
 		{
 			str++;
@@ -137,9 +143,27 @@ void	ft_printf(char *str, ...)
 				str++;
 			import(c, ap);
 			process(c);
-			output = ft_strjoin(output, c->str);
+			if (c->specifier != 'c')
+			{
+				temp = output;
+				output = (char *)ft_memalloc(olen + ft_strlen(c->str) + 1);
+				ft_memcpy(output, temp, olen);
+				ft_memcpy(output + olen, c->str, ft_strlen(c->str));
+				free(temp);
+				olen += ft_strlen(c->str);
+			}
+			else
+			{
+				temp = output;
+				output = (char *)ft_memalloc(olen + c->width + 1);
+				ft_memcpy(output, temp, olen);
+				ft_memcpy(output + olen, c->str, c->width);
+				olen += c->width;
+				free(temp);
+			}
 			str++;
 		}
 	}
-	write(1, output, ft_strlen(output));
+	write(1, output, olen);
+	return (olen);
 }
