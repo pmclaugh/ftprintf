@@ -36,6 +36,7 @@ void	setup_import(void)
 	g_import[19] = im_uint;
 	g_import[20] = im_nope;
 	g_import[21] = im_nope;
+	g_import[22] = im_nope;
 }
 
 void	im_char(t_conv *conv, va_list va)

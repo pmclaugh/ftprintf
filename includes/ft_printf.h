@@ -19,7 +19,7 @@
 # include "libft.h"
 # define FLAG "-+ #0"
 # define LENGTH "hljztL"
-# define SPECIFIER "csdioxXufFeEaAgGp%nUCS"
+# define SPECIFIER "csdioxXufFeEaAgGp%nUCSD"
 
 typedef struct	s_conv
 {
@@ -68,8 +68,8 @@ void			process(t_conv *conv);
 void			setup_process(void);
 void 	pr_nope(t_conv *conv);
 
-void			(*g_import[22])(t_conv *, va_list);
-void			(*g_process[22])(t_conv *);
+void			(*g_import[23])(t_conv *, va_list);
+void			(*g_process[23])(t_conv *);
 
 int				ft_printf(char *str, ...);
 

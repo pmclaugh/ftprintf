@@ -36,6 +36,7 @@ void	setup_process(void)
 	g_process[19] = pr_int;
 	g_process[20] = pr_nope;
 	g_process[21] = pr_nope;
+	g_process[22] = pr_nope;
 }
 
 void	pr_char(t_conv *conv)
