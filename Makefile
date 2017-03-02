@@ -36,7 +36,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	ar -rc $(NAME) $(OBJS)
-	ranlib $(NAME)
 %.o: %.c
 	gcc -c -o $@ $< -I includes
 clean:
