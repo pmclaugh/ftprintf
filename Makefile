@@ -15,7 +15,7 @@ SRCS = ft_lstdelone.c ft_putchar_fd.c ft_strdup.c ft_strnew.c ft_lstiter.c ft_pu
 	   ft_toupper.c ft_tolower.c ft_abs.c ft_exp.c ft_iswspace.c \
 	   ft_lstlen.c	ft_lstat.c get_next_line.c ft_itoa_base.c  ft_utoa_base.c \
 	   heap.c heap_help.c heap_help_two.c random.c \
-	   printf.c process.c import.c
+	   printf/printf.c printf/process.c printf/import.c
 OBJS = ft_lstdelone.o ft_putchar_fd.o ft_strdup.o ft_strnew.o ft_lstiter.o ft_putendl.o \
 	   ft_strequ.o ft_strnstr.o ft_lstmap.o ft_putendl_fd.o ft_striter.o ft_strrchr.o \
 	   ft_atoi.o	ft_lstnew.o	ft_putnbr.o	ft_striteri.o	ft_strsplit.o \
@@ -31,13 +31,14 @@ OBJS = ft_lstdelone.o ft_putchar_fd.o ft_strdup.o ft_strnew.o ft_lstiter.o ft_pu
 	   ft_toupper.o ft_tolower.o ft_abs.o ft_exp.o ft_iswspace.o \
 	   ft_lstlen.o	ft_lstat.o get_next_line.o ft_itoa_base.o ft_utoa_base.o \
 	   heap.o heap_help.o heap_help_two.o random.o \
-	   printf.o process.o import.o
+	   printf/printf.o printf/process.o printf/import.o
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	ar -rc $(NAME) $(OBJS)
+	ranlib $(NAME)
 %.o: %.c
-	gcc -w -c -o $@ $< -I includes
+	gcc -c -o $@ $< -I includes
 clean:
 	rm -f $(OBJS)
 fclean: clean

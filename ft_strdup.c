@@ -16,6 +16,8 @@ char	*ft_strdup(const char *s1)
 {
 	char	*newstr;
 
+	if (s1 == NULL)
+		return (NULL);
 	newstr = (char *)malloc(ft_strlen((char *)s1) + 1);
 	if (newstr == NULL)
 	{

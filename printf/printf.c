@@ -100,12 +100,6 @@ t_conv	*new_conv(char *str)
 		conv->specifier = *str;
 		str++;
 	}
-	if(*str)
-	{
-		conv = new_blank_conv();
-		conv->str = ft_strdup("NYI");
-		conv->specifier = 's';
-	}
 	return (conv);
 }
 
