@@ -16,6 +16,9 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdarg.h>
+# include <stddef.h>
+# include <wchar.h>
+# include <locale.h>
 # include "libft.h"
 # define FLAG "-+ #0"
 # define LENGTH "hljztL"
@@ -70,7 +73,7 @@ void			process(t_conv *conv);
 void			setup_process(void);
 void 	pr_nope(t_conv *conv);
 
-char	*wint_to_str(wint_t wint);
+char	*wint_to_str(wchar_t wint);
 char	*wstr_to_str(wchar_t *wstr);
 
 void			(*g_import[22])(t_conv *, va_list);

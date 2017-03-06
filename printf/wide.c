@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-char	*wint_to_str(wint_t wint)
+char	*wint_to_str(wchar_t wint)
 {
 	char	*str;
 
