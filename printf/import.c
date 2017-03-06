@@ -34,9 +34,8 @@ void	setup_import(void)
 	g_import[17] = im_pct;
 	g_import[18] = im_n;
 	g_import[19] = im_uint;
-	g_import[20] = im_nope;
-	g_import[21] = im_nope;
-	g_import[22] = im_nope;
+	g_import[20] = im_wchar;
+	g_import[21] = im_wstr;
 }
 
 void	im_char(t_conv *conv, va_list va)
@@ -166,6 +165,16 @@ void	im_n(t_conv *conv, va_list va)
 void	im_nope(t_conv *conv, va_list va)
 {
 	conv->str = ft_strdup("NYI");
+}
+
+void	im_wchar(t_conv *conv, va_list va)
+{
+	conv->str = wint_to_str(va_arg(va, wint_t));
+}
+
+void	im_wstr(t_conv *conv, va_list va)
+{
+	conv->str = wstr_to_str(va_arg(va, wchar_t *));
 }
 
 void	import(t_conv *conv, va_list va)
