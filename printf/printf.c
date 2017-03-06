@@ -138,7 +138,6 @@ int		ft_printf(char *str, ...)
 		{
 			str++;
 			c = new_conv(str);
-			//print_conv(c);
 			while (!ft_strchr(SPECIFIER, *str))
 				str++;
 			import(c, ap);

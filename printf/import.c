@@ -36,6 +36,7 @@ void	setup_import(void)
 	g_import[19] = im_uint;
 	g_import[20] = im_wchar;
 	g_import[21] = im_wstr;
+	g_import[22] = im_lint;
 }
 
 void	im_char(t_conv *conv, va_list va)
@@ -175,6 +176,14 @@ void	im_wchar(t_conv *conv, va_list va)
 void	im_wstr(t_conv *conv, va_list va)
 {
 	conv->str = wstr_to_str(va_arg(va, wchar_t *));
+}
+
+void	im_lint(t_conv *conv, va_list va)
+{
+	conv->specifier = 'd';
+	conv->length[0] = 'l';
+	conv->length[1] = 0;
+	im_int(conv, va);
 }
 
 void	import(t_conv *conv, va_list va)
