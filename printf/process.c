@@ -146,6 +146,7 @@ void	pr_pct(t_conv *conv)
 
 void	pr_n(t_conv *conv)
 {
+	pr_int(conv);
 }
 
 void	pr_nope(t_conv *conv)

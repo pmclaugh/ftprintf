@@ -156,6 +156,8 @@ int		ft_printf(char *str, ...)
 			while (*str && !ft_strchr(SPECIFIER, *str))
 				str++;
 			import(c, ap);
+			if (c->specifier == 'n')
+				c->str = ft_itoa(olen);
 			process(c);
 			if (c->specifier != 'c')
 			{
