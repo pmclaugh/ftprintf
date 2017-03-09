@@ -179,14 +179,22 @@ void	im_nope(t_conv *conv, va_list va)
 
 void	im_wchar(t_conv *conv, va_list va)
 {
-	conv->str = wint_to_str(va_arg(va, wint_t));
+	if (MB_CUR_MAX > 1)
+		conv->str = wint_to_str(va_arg(va, wint_t));
+	else
+		im_char(conv, va);
 }
 
 void	im_wstr(t_conv *conv, va_list va)
 {
-	conv->str = wstr_to_str(va_arg(va, wchar_t *));
-	if (conv->str == NULL)
-		conv->str = ft_strdup("(null)");
+	if (MB_CUR_MAX > 1)
+	{
+		conv->str = wstr_to_str(va_arg(va, wchar_t *));
+		if (conv->str == NULL)
+			conv->str = ft_strdup("(null)");
+	}
+	else
+		im_str(conv, va);
 }
 
 void	im_lint(t_conv *conv, va_list va)
