@@ -185,6 +185,8 @@ void	im_wchar(t_conv *conv, va_list va)
 void	im_wstr(t_conv *conv, va_list va)
 {
 	conv->str = wstr_to_str(va_arg(va, wchar_t *));
+	if (conv->str == NULL)
+		conv->str = ft_strdup("(null)");
 }
 
 void	im_lint(t_conv *conv, va_list va)

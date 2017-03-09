@@ -36,6 +36,8 @@ char	*wstr_to_str(wchar_t *wstr)
 	char *temp;
 	char *ch;
 
+	if(!wstr)
+		return NULL;
 	out = ft_strdup("");
 	while(*wstr)
 	{
