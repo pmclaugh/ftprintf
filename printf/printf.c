@@ -69,11 +69,19 @@ t_conv	*new_conv(char *str)
 		set_flag(conv, *str);
 		str++;
 	}
-	if (ft_atoi(str) != 0)
+	if (ft_atoi(str) != 0 || *str == '*')
 	{
-		conv->width = ft_atoi(str);
-		while (ft_isdigit(*str))
+		if (*str == '*')
+		{
+			conv->width = -1;
 			str++;
+		}
+		else
+		{
+			conv->width = ft_atoi(str);
+			while (ft_isdigit(*str) || *str == '*')
+				str++;
+		}
 	}
 	else
 		conv->width = 0;
@@ -81,8 +89,8 @@ t_conv	*new_conv(char *str)
 	{
 		conv->precision_on = 1;
 		str++;
-		conv->precision = ft_atoi(str);
-		while (ft_isdigit(*str))
+		conv->precision = *str == '*' ? -1 : ft_atoi(str);
+		while (ft_isdigit(*str) || *str == '*')
 			str++;
 	}
 	if (ft_strchr(LENGTH, *str))
@@ -138,7 +146,7 @@ int		ft_printf(char *str, ...)
 		{
 			str++;
 			c = new_conv(str);
-			while (!ft_strchr(SPECIFIER, *str))
+			while (*str && !ft_strchr(SPECIFIER, *str))
 				str++;
 			import(c, ap);
 			process(c);

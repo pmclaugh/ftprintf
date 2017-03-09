@@ -43,6 +43,8 @@ void	im_char(t_conv *conv, va_list va)
 {
 	char c;
 
+	if(!conv->specifier)
+		return ;
 	c = (char)va_arg(va, int);
 	if (!c)
 		conv->str = ft_strnew(0);
@@ -189,5 +191,14 @@ void	im_lint(t_conv *conv, va_list va)
 void	import(t_conv *conv, va_list va)
 {
 	setup_import();
-	g_import[chr_at(SPECIFIER, conv->specifier)](conv, va);
+	if (conv->specifier == 0)
+		conv->str = ft_strdup("");
+	else
+	{
+		if (conv->width == -1)
+			conv->width = va_arg(va, int);
+		if (conv->precision == -1)
+			conv->precision = va_arg(va, int);
+		g_import[chr_at(SPECIFIER, conv->specifier)](conv, va);
+	}
 }

@@ -156,5 +156,6 @@ void	pr_nope(t_conv *conv)
 void	process(t_conv *conv)
 {
 	setup_process();
-	g_process[chr_at(SPECIFIER, conv->specifier)](conv);
+	if (conv->specifier != 0)
+		g_process[chr_at(SPECIFIER, conv->specifier)](conv);
 }
