@@ -33,14 +33,17 @@ char	*wint_to_str(wchar_t wint)
 char	*wstr_to_str(wchar_t *wstr)
 {
 	char *out;
+	char *temp;
 	char *ch;
 
 	out = ft_strdup("");
 	while(*wstr)
 	{
 		ch = wint_to_str(*wstr);
-		ft_strjoin(out, ch);
+		temp = ft_strjoin(out, ch);
+		free(out);
 		free(ch);
+		out = temp;
 		wstr++;
 	}
 	return out;

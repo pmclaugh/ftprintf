@@ -111,6 +111,13 @@ t_conv	*new_conv(char *str)
 	return (conv);
 }
 
+void	free_conv(t_conv *c)
+{
+	if (c->str)
+		free(c->str);
+	free(c);
+}
+
 void	print_conv(t_conv *conv)
 {
 	printf("\n");
@@ -168,9 +175,11 @@ int		ft_printf(char *str, ...)
 				olen += c->width;
 				free(temp);
 			}
+			free_conv(c);
 			str++;
 		}
 	}
 	write(1, output, olen);
+	free(output);
 	return (olen);
 }
