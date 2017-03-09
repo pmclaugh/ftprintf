@@ -107,6 +107,7 @@ void	im_uint(t_conv *conv, va_list va)
 
 void	im_double(t_conv *conv, va_list va)
 {
+	conv->str = ft_strdup("NYI");
 }
 
 void	im_point(t_conv *conv, va_list va)
