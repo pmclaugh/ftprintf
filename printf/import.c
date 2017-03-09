@@ -164,7 +164,12 @@ void	im_pct(t_conv *conv, va_list va)
 
 void	im_n(t_conv *conv, va_list va)
 {
-	conv->str = ft_strdup("NYI");
+	int *addr;
+
+	addr = va_arg(va, int *);
+	*addr = ft_atoi(conv->str);
+	free(conv->str);
+	conv->str = ft_strdup("");
 }
 
 void	im_nope(t_conv *conv, va_list va)
