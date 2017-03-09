@@ -64,6 +64,8 @@ t_conv	*new_conv(char *str)
 	t_conv *conv;
 
 	conv = new_blank_conv();
+	if (!*str)
+		return (conv);
 	while (ft_strchr(FLAG, *str))
 	{
 		set_flag(conv, *str);
@@ -153,13 +155,19 @@ int		ft_printf(char *str, ...)
 		{
 			str++;
 			c = new_conv(str);
+			if (c->specifier == 0)
+			{
+				if (*str == ' ')
+					str++;
+				continue ;
+			}
 			while (*str && !ft_strchr(SPECIFIER, *str))
 				str++;
 			if (c->specifier == 'n')
 				c->str = ft_itoa(olen);
 			import(c, ap);
 			process(c);
-			if (c->specifier != 'c')
+			if (c->specifier != 'c' && c->specifier != 'C')
 			{
 				temp = output;
 				output = (char *)ft_memalloc(olen + ft_strlen(c->str) + 1);

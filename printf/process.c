@@ -18,7 +18,7 @@ void	setup_process(void)
 	g_process[1] = pr_str;
 	g_process[2] = pr_int;
 	g_process[3] = pr_int;
-	g_process[4] = pr_int;
+	g_process[4] = pr_oct;
 	g_process[5] = pr_int;
 	g_process[6] = pr_int;//X
 	g_process[7] = pr_int;
@@ -37,6 +37,7 @@ void	setup_process(void)
 	g_process[20] = pr_char;
 	g_process[21] = pr_str;
 	g_process[22] = pr_int;
+	g_process[23] = pr_oct;
 }
 
 void	pr_char(t_conv *conv)
@@ -119,6 +120,12 @@ void	pr_str(t_conv *conv)
 	}
 }
 
+void	pr_oct(t_conv *conv)
+{
+	conv->plus = 0;
+	pr_int(conv);
+}
+
 void	pr_double(t_conv *conv)
 {
 }
@@ -128,10 +135,17 @@ void	pr_point(t_conv *conv)
 	int i;
 
 	i = -1;
-	while (conv->str[++i])
-		conv->str[i] = ft_tolower(conv->str[i]);
+	if (conv->precision_on && conv->precision == 0 && conv->str[0] == '0')
+		conv->str = ft_strdup("");
+	else
+		while (conv->str[++i])
+			conv->str[i] = ft_tolower(conv->str[i]);
+	while (conv->precision_on && ft_strlen(conv->str) < conv->precision)
+		conv->str = insert_at(conv->str, '0', 0);
 	conv->str = insert_at(conv->str, 'x', 0);
 	conv->str = insert_at(conv->str, '0', 0);
+	while (ft_strlen(conv->str) < conv->width)
+		conv->str = insert_at(conv->str, ' ', 0);
 }
 
 void	pr_pct(t_conv *conv)
@@ -146,7 +160,7 @@ void	pr_pct(t_conv *conv)
 
 void	pr_n(t_conv *conv)
 {
-	
+
 }
 
 void	pr_nope(t_conv *conv)

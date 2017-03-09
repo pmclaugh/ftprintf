@@ -37,6 +37,7 @@ void	setup_import(void)
 	g_import[20] = im_wchar;
 	g_import[21] = im_wstr;
 	g_import[22] = im_lint;
+	g_import[23] = im_oct;
 }
 
 void	im_char(t_conv *conv, va_list va)
@@ -75,9 +76,9 @@ void	im_int(t_conv *conv, va_list va)
 	if (ft_strcmp(conv->length, "ll") == 0)
 		conv->str = ft_lltoa(va_arg(va, long long int));
 	if (ft_strcmp(conv->length, "j") == 0)
-		conv->str = ft_ulltoa_base(va_arg(va, intmax_t), 10);
+		conv->str = ft_lltoa_base(va_arg(va, intmax_t), 10);
 	if (ft_strcmp(conv->length, "z") == 0)
-		conv->str = ft_ulltoa_base(va_arg(va, size_t), 10);
+		conv->str = ft_lltoa_base(va_arg(va, size_t), 10);
 }
 
 void	im_uint(t_conv *conv, va_list va)
@@ -117,12 +118,17 @@ void	im_point(t_conv *conv, va_list va)
 
 void	im_oct(t_conv *conv, va_list va)
 {
+	if (conv->specifier == 'O')
+	{
+		conv->length[0] = 'l';
+		conv->length[1] = 0;
+	}
 	if (conv->length[0] == 0)
 		conv->str = ft_utoa_base(va_arg(va, int), 8);
 	if (ft_strcmp(conv->length, "hh") == 0)
-		conv->str = ft_utoa_base((signed char)va_arg(va, int), 8);
+		conv->str = ft_utoa_base((unsigned char)va_arg(va, int), 8);
 	if (ft_strcmp(conv->length, "h") == 0)
-		conv->str = ft_utoa_base((short int)va_arg(va, int), 8);
+		conv->str = ft_utoa_base((unsigned short int)va_arg(va, int), 8);
 	if (ft_strcmp(conv->length, "l") == 0)
 		conv->str = ft_ultoa_base(va_arg(va, long int), 8);
 	if (ft_strcmp(conv->length, "ll") == 0)
@@ -213,9 +219,22 @@ void	import(t_conv *conv, va_list va)
 	else
 	{
 		if (conv->width == -1)
+		{
 			conv->width = va_arg(va, int);
+			if (conv->width < 0)
+			{
+				conv->width = conv->width * -1;
+				conv->minus = 1;
+			}
+		}
 		if (conv->precision == -1)
+		{
 			conv->precision = va_arg(va, int);
+			if (conv->precision < 0)
+			{
+				conv->precision = 0;
+			}
+		}
 		g_import[chr_at(SPECIFIER, conv->specifier)](conv, va);
 	}
 }

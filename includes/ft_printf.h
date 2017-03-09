@@ -22,7 +22,7 @@
 # include "libft.h"
 # define FLAG "-+ #0"
 # define LENGTH "hljztL"
-# define SPECIFIER "csdioxXufFeEaAgGp%nUCSD"
+# define SPECIFIER "csdioxXufFeEaAgGp%nUCSDO"
 
 typedef struct	s_conv
 {
@@ -70,6 +70,7 @@ void			pr_double(t_conv *conv);
 void			pr_point(t_conv *conv);
 void			pr_pct(t_conv *conv);
 void			pr_n(t_conv *conv);
+void	pr_oct(t_conv *conv);
 void			process(t_conv *conv);
 void			setup_process(void);
 void 	pr_nope(t_conv *conv);
@@ -77,8 +78,8 @@ void 	pr_nope(t_conv *conv);
 char	*wint_to_str(wchar_t wint);
 char	*wstr_to_str(wchar_t *wstr);
 
-void			(*g_import[23])(t_conv *, va_list);
-void			(*g_process[23])(t_conv *);
+void			(*g_import[24])(t_conv *, va_list);
+void			(*g_process[24])(t_conv *);
 
 int				ft_printf(char *str, ...);
 
