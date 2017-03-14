@@ -63,6 +63,11 @@ void	im_char(t_conv *conv, va_list va)
 
 void	im_str(t_conv *conv, va_list va)
 {
+	if (ft_strcmp(conv->length, "l") == 0)
+	{
+		im_wstr(conv, va);
+		return ;
+	}
 	conv->str = ft_strdup(va_arg(va, char *));
 	if (conv->str == NULL)
 		conv->str = ft_strdup("(null)");
@@ -205,7 +210,6 @@ void	im_wstr(t_conv *conv, va_list va)
 {
 	wint_t *wstr;
 	int i;
-	printf("hey, wide string\n");
 	if (MB_CUR_MAX > 1)
 	{
 		wstr = va_arg(va, wint_t *);
