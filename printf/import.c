@@ -65,6 +65,7 @@ void	im_str(t_conv *conv, va_list va)
 {
 	if (ft_strcmp(conv->length, "l") == 0)
 	{
+		conv->length[0] = 0;
 		im_wstr(conv, va);
 		return ;
 	}
@@ -208,25 +209,19 @@ void	im_wchar(t_conv *conv, va_list va)
 
 void	im_wstr(t_conv *conv, va_list va)
 {
-	wint_t *wstr;
-	int i;
+	conv->str = wstr_to_str(va_arg(va, wint_t *));
+	if (conv->str == NULL)
+		conv->str = ft_strdup("(null)");
+	/*
 	if (MB_CUR_MAX > 1)
 	{
-		wstr = va_arg(va, wint_t *);
-		while (wstr[i])
-			i++;
-		if (conv->precision_on)
-		{
-			if (conv->precision < i)
-				wstr[i] = 0;
-			conv->precision_on = 0;
-		}
-		conv->str = wstr_to_str(wstr);
+		conv->str = wstr_to_str(va_arg(va, wint_t *));
 		if (conv->str == NULL)
 			conv->str = ft_strdup("(null)");
 	}
 	else
 		im_str(conv, va);
+		*/
 }
 
 void	im_lint(t_conv *conv, va_list va)
