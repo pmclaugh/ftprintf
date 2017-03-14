@@ -206,6 +206,8 @@ void	im_wstr(t_conv *conv, va_list va)
 	wint_t *wstr;
 	int i;
 
+	if (conv->precision_on)
+		printf("hey, wide string with precision on\n");
 	if (MB_CUR_MAX > 1)
 	{
 		wstr = va_arg(va, wint_t *);
