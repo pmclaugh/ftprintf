@@ -205,7 +205,7 @@ void	im_wstr(t_conv *conv, va_list va)
 {
 	if (MB_CUR_MAX > 1)
 	{
-		conv->str = wstr_to_str(va_arg(va, wchar_t *));
+		conv->str = wstr_to_str(va_arg(va, wint_t *));
 		if (conv->str == NULL)
 			conv->str = ft_strdup("(null)");
 	}
