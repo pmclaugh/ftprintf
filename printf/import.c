@@ -203,9 +203,21 @@ void	im_wchar(t_conv *conv, va_list va)
 
 void	im_wstr(t_conv *conv, va_list va)
 {
+	wint_t *wstr;
+	int i;
+
 	if (MB_CUR_MAX > 1)
 	{
-		conv->str = wstr_to_str(va_arg(va, wint_t *));
+		wstr = va_arg(va, wint_t *);
+		while (wstr[i])
+			i++;
+		if (conv->precision_on)
+		{
+			if (conv->precision < i)
+				wstr[i] = 0;
+			conv->precision_on = 0;
+		}
+		conv->str = wstr_to_str(wstr);
 		if (conv->str == NULL)
 			conv->str = ft_strdup("(null)");
 	}
@@ -225,7 +237,10 @@ void	import(t_conv *conv, va_list va)
 {
 	setup_import();
 	if (conv->specifier == 0)
-		conv->str = ft_strdup("");
+	{
+		conv->str = ft_strnew(conv->width);
+		ft_memset(conv->str, ' ', conv->width);
+	}
 	else
 	{
 		if (conv->width == -1)

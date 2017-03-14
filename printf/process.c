@@ -145,7 +145,7 @@ void	pr_point(t_conv *conv)
 	conv->str = insert_at(conv->str, 'x', 0);
 	conv->str = insert_at(conv->str, '0', 0);
 	while (ft_strlen(conv->str) < conv->width)
-		conv->str = insert_at(conv->str, ' ', 0);
+		conv->str = insert_at(conv->str, ' ', 0 + conv->minus * ft_strlen(conv->str));
 }
 
 void	pr_pct(t_conv *conv)

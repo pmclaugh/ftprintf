@@ -38,6 +38,8 @@ typedef struct	s_conv
 	char	length[3];
 	char	specifier;
 	char	*str;
+	char 	endchar;
+	int 	wstrlen;
 }				t_conv;
 
 char			*prepend(char *str, char c);
@@ -82,5 +84,7 @@ void			(*g_import[24])(t_conv *, va_list);
 void			(*g_process[24])(t_conv *);
 
 int				ft_printf(char *str, ...);
+
+void	print_conv(t_conv *conv);
 
 #endif

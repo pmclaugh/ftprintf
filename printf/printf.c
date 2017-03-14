@@ -133,11 +133,35 @@ void	print_conv(t_conv *conv)
 	printf("and specifier is %c\n", conv->specifier);
 }
 
+char	*stitch(t_conv *c, char *output, int *olen)
+{
+	char	*temp;
+
+	if (c->specifier != 'c' && c->specifier != 'C')
+	{
+		temp = output;
+		output = (char *)ft_memalloc(*olen + ft_strlen(c->str) + 1);
+		ft_memcpy(output, temp, *olen);
+		ft_memcpy(output + *olen, c->str, ft_strlen(c->str));
+		free(temp);
+		*olen = *olen + ft_strlen(c->str);
+	}
+	else
+	{
+		temp = output;
+		output = (char *)ft_memalloc(*olen + c->width + 1);
+		ft_memcpy(output, temp, *olen);
+		ft_memcpy(output + *olen, c->str, c->width);
+		*olen = *olen + c->width;
+		free(temp);
+	}
+	return (output);
+}
+
 int		ft_printf(char *str, ...)
 {
 	va_list ap;
 	char	*output;
-	char	*temp;
 	int		olen;
 	t_conv	*c;
 
@@ -167,24 +191,7 @@ int		ft_printf(char *str, ...)
 				c->str = ft_itoa(olen);
 			import(c, ap);
 			process(c);
-			if (c->specifier != 'c' && c->specifier != 'C')
-			{
-				temp = output;
-				output = (char *)ft_memalloc(olen + ft_strlen(c->str) + 1);
-				ft_memcpy(output, temp, olen);
-				ft_memcpy(output + olen, c->str, ft_strlen(c->str));
-				free(temp);
-				olen += ft_strlen(c->str);
-			}
-			else
-			{
-				temp = output;
-				output = (char *)ft_memalloc(olen + c->width + 1);
-				ft_memcpy(output, temp, olen);
-				ft_memcpy(output + olen, c->str, c->width);
-				olen += c->width;
-				free(temp);
-			}
+			output = stitch(c, output, &olen);
 			free_conv(c);
 			str++;
 		}
