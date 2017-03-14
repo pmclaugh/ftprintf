@@ -6,7 +6,7 @@
 /*   By: pmclaugh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 00:34:44 by pmclaugh          #+#    #+#             */
-/*   Updated: 2017/03/01 21:51:06 by pmclaugh         ###   ########.fr       */
+/*   Updated: 2017/03/14 04:20:26 by pmclaugh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,103 +34,6 @@ int		chr_at(char *str, char c)
 	while (str[i] && str[i] != c)
 		i++;
 	return (*str ? i : -1);
-}
-
-t_conv	*new_blank_conv(void)
-{
-	t_conv *conv;
-
-	conv = (t_conv *)malloc(sizeof(t_conv));
-	ft_bzero(conv, sizeof(t_conv));
-	return (conv);
-}
-
-void	set_flag(t_conv *conv, char c)
-{
-	if (c == '-')
-		conv->minus = 1;
-	if (c == '+')
-		conv->plus = 1;
-	if (c == '#')
-		conv->hash = 1;
-	if (c == ' ')
-		conv->space = 1;
-	if (c == '0')
-		conv->zero = 1;
-}
-
-t_conv	*new_conv(char *str)
-{
-	t_conv *conv;
-
-	conv = new_blank_conv();
-	if (!*str)
-		return (conv);
-	while (ft_strchr(FLAG, *str))
-	{
-		set_flag(conv, *str);
-		str++;
-	}
-	if (ft_atoi(str) != 0 || *str == '*')
-	{
-		if (*str == '*')
-		{
-			conv->width = -1;
-			str++;
-		}
-		else
-		{
-			conv->width = ft_atoi(str);
-			while (ft_isdigit(*str) || *str == '*')
-				str++;
-		}
-	}
-	else
-		conv->width = 0;
-	if (*str == '.')
-	{
-		conv->precision_on = 1;
-		str++;
-		conv->precision = *str == '*' ? -1 : ft_atoi(str);
-		while (ft_isdigit(*str) || *str == '*')
-			str++;
-	}
-	if (ft_strchr(LENGTH, *str))
-	{
-		conv->length[0] = *str;
-		str++;
-	}
-	if (ft_strchr(LENGTH, *str))
-	{
-		conv->length[1] = *str;
-		str++;
-	}
-	if (ft_strchr(SPECIFIER, *str))
-	{
-		conv->specifier = *str;
-		str++;
-	}
-	return (conv);
-}
-
-void	free_conv(t_conv *c)
-{
-	if (c->str)
-		free(c->str);
-	free(c);
-}
-
-void	print_conv(t_conv *conv)
-{
-	printf("\n");
-	printf("flags: - %d, + %d, space %d, hash %d, zero %d\n", \
-		conv->minus, conv->plus, conv->space, conv->hash, conv->zero);
-	printf("width %d\n", conv->width);
-	printf("precision is on/off: %d\n", conv->precision_on);
-	if (conv->precision_on)
-		printf("precision is %d\n", conv->precision);
-	printf("length is %s\n", conv->length);
-	printf("and specifier is %c\n", conv->specifier);
 }
 
 char	*stitch(t_conv *c, char *output, int *olen)
@@ -163,7 +66,7 @@ int		ft_printf(char *str, ...)
 	va_list ap;
 	char	*output;
 	int		olen;
-	t_conv	*c;
+	t_conv *c;
 
 	va_start(ap, str);
 	output = ft_strdup("");
@@ -172,7 +75,7 @@ int		ft_printf(char *str, ...)
 	{
 		if (*str != '%')
 		{
-			output = insert_at(output, *str++, ft_strlen(output));
+			output = insert_at(output, *str++, ft_strlen(output));//fix to olen
 			olen++;
 		}
 		else

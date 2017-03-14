@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wide.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pmclaugh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/14 03:09:39 by pmclaugh          #+#    #+#             */
+/*   Updated: 2017/03/14 03:09:41 by pmclaugh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 char	*wint_to_str(wchar_t wint)
@@ -6,9 +18,7 @@ char	*wint_to_str(wchar_t wint)
 
 	str = ft_memalloc(5);
 	if (wint <= 0x7F)
-	{
 		str[0] = wint;
-	}
 	else if (wint <= 0x7FF)
 	{
 		str[0] = (((wint & 0x07c0) >> 6) + 0xc0);
@@ -36,10 +46,11 @@ char	*wstr_to_str(wchar_t *wstr)
 	char *temp;
 	char *ch;
 
-	if(!wstr)
-		return NULL;
+	printf("wstr to str called\n");
+	if (!wstr)
+		return (NULL);
 	out = ft_strdup("");
-	while(*wstr)
+	while (*wstr)
 	{
 		ch = wint_to_str(*wstr);
 		temp = ft_strjoin(out, ch);
@@ -48,5 +59,5 @@ char	*wstr_to_str(wchar_t *wstr)
 		out = temp;
 		wstr++;
 	}
-	return out;
+	return (out);
 }

@@ -68,10 +68,9 @@ void	im_wstr(t_conv *conv, va_list va);
 void			pr_char(t_conv *conv);
 void			pr_str(t_conv *conv);
 void			pr_int(t_conv *conv);
-void			pr_double(t_conv *conv);
+void			pr_dummy(t_conv *conv);
 void			pr_point(t_conv *conv);
 void			pr_pct(t_conv *conv);
-void			pr_n(t_conv *conv);
 void	pr_oct(t_conv *conv);
 void			process(t_conv *conv);
 void			setup_process(void);
@@ -85,6 +84,7 @@ void			(*g_process[24])(t_conv *);
 
 int				ft_printf(char *str, ...);
 
-void	print_conv(t_conv *conv);
+void	free_conv(t_conv *conv);
+t_conv *new_conv(char *str);
 
 #endif
