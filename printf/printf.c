@@ -83,11 +83,7 @@ int		ft_printf(char *str, ...)
 			str++;
 			c = new_conv(str);
 			if (c->specifier == 0)
-			{
-				if (*str == ' ')
-					str++;
 				continue ;
-			}
 			while (*str && !ft_strchr(SPECIFIER, *str))
 				str++;
 			if (c->specifier == 'n')
