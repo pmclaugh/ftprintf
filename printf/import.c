@@ -46,6 +46,11 @@ void	im_char(t_conv *conv, va_list va)
 
 	if(!conv->specifier)
 		return ;
+	if (ft_strcmp(conv->length, "l") == 0)
+	{
+		im_wchar(conv, va);
+		return ;
+	}
 	c = (char)va_arg(va, int);
 	if (!c)
 		conv->str = ft_strnew(0);
@@ -130,9 +135,9 @@ void	im_oct(t_conv *conv, va_list va)
 	if (ft_strcmp(conv->length, "h") == 0)
 		conv->str = ft_utoa_base((unsigned short int)va_arg(va, int), 8);
 	if (ft_strcmp(conv->length, "l") == 0)
-		conv->str = ft_ultoa_base(va_arg(va, long int), 8);
+		conv->str = ft_ulltoa_base((unsigned long long int)va_arg(va, long int), 8);
 	if (ft_strcmp(conv->length, "ll") == 0)
-		conv->str = ft_ulltoa_base(va_arg(va, long long int), 8);
+		conv->str = ft_ulltoa_base(va_arg(va, unsigned long long int), 8);
 	if (ft_strcmp(conv->length, "j") == 0)
 		conv->str = ft_ulltoa_base(va_arg(va, intmax_t), 8);
 	if (ft_strcmp(conv->length, "z") == 0)
@@ -150,7 +155,7 @@ void	im_hex(t_conv *conv, va_list va)
 	if (ft_strcmp(conv->length, "h") == 0)
 		conv->str = ft_utoa_base((unsigned short int)va_arg(va, int), 16);
 	if (ft_strcmp(conv->length, "l") == 0)
-		conv->str = ft_ultoa_base((unsigned long int)va_arg(va, long int), 16);
+		conv->str = ft_ulltoa_base((unsigned long long int)va_arg(va, long int), 16);
 	if (ft_strcmp(conv->length, "ll") == 0)
 		conv->str = ft_ulltoa_base(va_arg(va, long long int), 16);
 	if (ft_strcmp(conv->length, "j") == 0)
@@ -185,6 +190,11 @@ void	im_nope(t_conv *conv, va_list va)
 
 void	im_wchar(t_conv *conv, va_list va)
 {
+	if (ft_strcmp(conv->length, "hh") == 0)
+	{
+		im_char(conv, va);
+		return ;
+	}
 	if (MB_CUR_MAX > 1)
 		conv->str = wint_to_str(va_arg(va, wint_t));
 	else
