@@ -42,8 +42,6 @@ typedef struct	s_conv
 	int 	wstrlen;
 }				t_conv;
 
-char			*prepend(char *str, char c);
-char			*apppend(char *str, char c);
 int				chr_at(char *str, char c);
 char			*insert_at(char *str, char c, int index);
 
@@ -63,6 +61,8 @@ void			setup_import(void);
 void	im_nope(t_conv *conv, va_list va);
 void	im_wchar(t_conv *conv, va_list va);
 void	im_wstr(t_conv *conv, va_list va);
+char *append(char *str, int len, char c);
+char *prepend(char *str, int len, char c);
 
 
 void			pr_char(t_conv *conv);

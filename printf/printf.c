@@ -6,7 +6,7 @@
 /*   By: pmclaugh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 00:34:44 by pmclaugh          #+#    #+#             */
-/*   Updated: 2017/03/14 04:20:26 by pmclaugh         ###   ########.fr       */
+/*   Updated: 2017/03/01 21:51:06 by pmclaugh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,36 @@ char	*stitch(t_conv *c, char *output, int *olen)
 	return (output);
 }
 
+char *append(char *str, int len, char c)
+{
+	char *out;
+
+	out = (char *)malloc(len + 2);
+	out[len + 1] = 0;
+	out[len] = c;
+	ft_memcpy(out, str, len);
+	free(str);
+	return (out);
+}
+
+char *prepend(char *str, int len, char c)
+{
+	char *out;
+
+	out = (char *)malloc(len + 2);
+	out[len + 1] = 0;
+	out[0] = c;
+	ft_memcpy(out + 1, str, len);
+	free(str);
+	return (out);
+}
+
 int		ft_printf(char *str, ...)
 {
 	va_list ap;
 	char	*output;
 	int		olen;
-	t_conv *c;
+	t_conv 	*c;
 
 	va_start(ap, str);
 	output = ft_strdup("");
@@ -75,7 +99,7 @@ int		ft_printf(char *str, ...)
 	{
 		if (*str != '%')
 		{
-			output = insert_at(output, *str++, ft_strlen(output));//fix to olen
+			output = append(output, olen, *str++);
 			olen++;
 		}
 		else
@@ -83,7 +107,11 @@ int		ft_printf(char *str, ...)
 			str++;
 			c = new_conv(str);
 			if (c->specifier == 0)
+			{
+				if (*str == ' ')
+					str++;
 				continue ;
+			}
 			while (*str && !ft_strchr(SPECIFIER, *str))
 				str++;
 			if (c->specifier == 'n')

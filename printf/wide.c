@@ -46,7 +46,6 @@ char	*wstr_to_str(wchar_t *wstr)
 	char *temp;
 	char *ch;
 
-	printf("wstr to str called\n");
 	if (!wstr)
 		return (NULL);
 	out = ft_strdup("");
