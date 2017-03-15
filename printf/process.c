@@ -42,13 +42,14 @@ void	setup_process(void)
 
 void	pr_char(t_conv *conv)
 {
-	int i;
-	char fillchar;
+	int		i;
+	char	fillchar;
 
 	i = 1;
 	fillchar = conv->zero ? '0' : ' ';
 	while (i++ < conv->width)
-		conv->str = conv->minus ? append(conv->str, i - 1, fillchar) : prepend(conv->str, i - 1, fillchar); 
+		conv->str = conv->minus ? append(conv->str, i - 1, fillchar) : \
+	prepend(conv->str, i - 1, fillchar);
 	if (conv->width == 0)
 		conv->width = 1;
 }

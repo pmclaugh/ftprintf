@@ -60,3 +60,13 @@ char	*wstr_to_str(wchar_t *wstr)
 	}
 	return (out);
 }
+
+int		chr_at(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && str[i] != c)
+		i++;
+	return (*str ? i : -1);
+}

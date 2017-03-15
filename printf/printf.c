@@ -26,16 +26,6 @@ char	*insert_at(char *str, char c, int index)
 	return (newstr);
 }
 
-int		chr_at(char *str, char c)
-{
-	int i;
-
-	i = 0;
-	while (str[i] && str[i] != c)
-		i++;
-	return (*str ? i : -1);
-}
-
 char	*stitch(t_conv *c, char *output, int *olen)
 {
 	char	*temp;
@@ -61,7 +51,7 @@ char	*stitch(t_conv *c, char *output, int *olen)
 	return (output);
 }
 
-char *append(char *str, int len, char c)
+char	*append(char *str, int len, char c)
 {
 	char *out;
 
@@ -73,7 +63,7 @@ char *append(char *str, int len, char c)
 	return (out);
 }
 
-char *prepend(char *str, int len, char c)
+char	*prepend(char *str, int len, char c)
 {
 	char *out;
 
@@ -85,44 +75,40 @@ char *prepend(char *str, int len, char c)
 	return (out);
 }
 
+void	do_it(t_conv *c, char **output, int *olen, va_list ap)
+{
+	if (c->specifier == 'n')
+		c->str = ft_itoa(*olen);
+	import(c, ap);
+	process(c);
+	*output = stitch(c, *output, olen);
+	free_conv(c);
+}
+
 int		ft_printf(char *str, ...)
 {
 	va_list ap;
 	char	*output;
 	int		olen;
-	t_conv 	*c;
+	t_conv	*c;
 
 	va_start(ap, str);
 	output = ft_strdup("");
 	olen = 0;
 	while (*str)
-	{
 		if (*str != '%')
-		{
-			output = append(output, olen, *str++);
-			olen++;
-		}
+			output = append(output, olen++, *str++);
 		else
 		{
 			str++;
 			c = new_conv(str);
 			if (c->specifier == 0)
-			{
-				if (*str == ' ')
-					str++;
 				continue ;
-			}
+			do_it(c, &output, &olen, ap);
 			while (*str && !ft_strchr(SPECIFIER, *str))
 				str++;
-			if (c->specifier == 'n')
-				c->str = ft_itoa(olen);
-			import(c, ap);
-			process(c);
-			output = stitch(c, output, &olen);
-			free_conv(c);
 			str++;
 		}
-	}
 	write(1, output, olen);
 	free(output);
 	return (olen);
